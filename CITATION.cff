@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you reference these notes, please cite the repository."
+title: "DarkWow Chain Research"
+type: dataset
+authors:
+  - name: "9lordisgod"
+repository-code: "https://github.com/9lordisgod/DarkWow-Chain-Research"
+abstract: >-
+  Weekly, source-verified research notes on the DarkWow blockchain (a
+  privacy-first fork of DarkFi): genesis architecture, consensus, emission
+  and governance primitives, with reproducible models and charts.
+keywords:
+  - DarkWow
+  - DarkFi
+  - blockchain
+  - zero-knowledge
+  - object-capability
+  - Uncle Merkle
+date-released: 2026-09-24

@@ -1,0 +1,10 @@
+genesis_tx_position,counter,name,crate,role,derivation,purpose
+1,2,Deployooor,dwow_deployooor_contract,consensus-critical,"poseidon_hash([42, 0, 2])",Deploys and immutably locks every later WASM contract
+2,4,NativeToken,dwow_native_token_contract,consensus-critical,"poseidon_hash([42, 0, 4])","Coinbase (PoWRewardV1), fee payment, Pedersen mass-balance supply audit"
+3,3,PromissoryNote,dwow_promissory_note_contract,ecosystem infrastructure (O-Cap primitive),"poseidon_hash([42, 0, 3])","Privacy-first DeFi token layer: mint, burn, transfer, atomic OTC swap"
+4,5,Identity,dwow_identity_contract,ecosystem infrastructure (O-Cap primitive),"poseidon_hash([42, 0, 5])",ZK-verifiable credentials and selective-disclosure capability proofs
+5,6,Oracle,dwow_oracle_contract,ecosystem infrastructure (O-Cap primitive),"poseidon_hash([42, 0, 6])","Push-model external data feeds (price, weather, randomness)"
+6,7,Attestation,dwow_attestation_contract,ecosystem infrastructure (O-Cap primitive),"poseidon_hash([42, 0, 7])","Claims, predicates, delegation and slashing -- the trust layer"
+7,8,Purse,dwow_purse_contract,ecosystem infrastructure (O-Cap primitive),"poseidon_hash([42, 0, 8])",Fungible capability container with hidden balances and token types
+8,9,Box,dwow_box_contract,ecosystem infrastructure (O-Cap primitive),"poseidon_hash([42, 0, 9])","Capability delegation / restriction container, consumed on open"
+9,10,MultiSig,dwow_multisig_contract,ecosystem infrastructure (O-Cap primitive),"poseidon_hash([42, 0, 10])","N-of-M threshold approvals, private ZK voting"
