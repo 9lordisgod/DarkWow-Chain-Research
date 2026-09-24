@@ -2,9 +2,9 @@
 
 Weekly, source‑verified research notes on **[DarkWow](https://github.com/PatrickMockridge/DarkWow)** — Patrick Mockridge's privacy‑first fork of DarkFi built around composable Object‑Capability (O‑Cap) primitives, Uncle Merkle proof‑of‑work consensus, a zero‑premine emission schedule and per‑block Pedersen supply audits.
 
-Each week takes one slice of the chain, reads the primary sources (*The DarkWow Book* and the `linear-master` source tree), and writes it up with diagrams, tables and small programs that reproduce every number quoted. The goal is a reference that a newcomer can trust because every claim points at the line of code or spec page it came from.
+Each week's topic is set by Patrick Mockridge, DarkWow's author. The write‑up takes that slice of the chain, reads the primary sources (*The DarkWow Book* and the `linear-master` source tree), and documents it with diagrams, tables and small programs that reproduce every number quoted. The goal is a reference that a newcomer can trust because every claim points at the line of code or spec page it came from.
 
-> **Status:** independent research. Not affiliated with or endorsed by the DarkWow project. DarkWow itself is unaudited software (*"use at your own risk"* per its README); nothing here is investment or security advice.
+> **Status:** an ongoing weekly research series produced in collaboration with the DarkWow project — topics come from Patrick Mockridge; the analysis, code and any errors are the researcher's own. DarkWow is unaudited software (*"use at your own risk"* per its README); nothing here is investment advice.
 
 ## Weekly index
 
