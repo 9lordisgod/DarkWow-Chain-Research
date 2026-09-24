@@ -11,7 +11,6 @@ Each week takes one slice of the chain, reads the primary sources (*The DarkWow 
 | Week | Dates | Topic | Artifacts |
 |:---:|---|---|---|
 | [**01**](weeks/week-01/README.md) | 2026‑09‑21 → 09‑27 | **Genesis block & architecture** — the nine genesis contracts, deterministic `ContractId`s, why only two are consensus‑critical, and the five structural breaks from DarkFi (O‑Cap vs DAO, the Money split, zero premine + emission, Uncle Merkle vs overlay‑DAG, ZK predicates vs ACLs) | 8 diagrams · 4 charts · 3 models · 26 tests · 6 findings |
-| 02 | 2026‑09‑28 → 10‑04 | *planned* — verify the DarkFi side of the comparison at the fork point; regenerate all nine genesis IDs | |
 
 ## What's in the repository
 
