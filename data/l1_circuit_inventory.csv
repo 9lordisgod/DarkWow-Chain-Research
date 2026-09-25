@@ -1,0 +1,11 @@
+contract,circuit,source,k,witness_slots,public_inputs,witness_only,public_input_tier,witness_tier,consumes,creates,poseidon_calls,ec_ops,range_checks,merkle_roots,leaf_binds_owner,max_nullifiers_per_leaf,public_inputs_in_order
+box,Put,src/contract/box/proof/put.zk,11,14,5,9,safe,safe,True,True,4,0,0,1,False,unbounded,nullifier expected_root new_leaf tx_binding tx_nonce
+box,Take,src/contract/box/proof/take.zk,11,11,4,7,safe,safe,True,False,3,0,0,1,False,unbounded,nullifier expected_root tx_binding tx_nonce
+purse,Deposit,src/contract/purse/proof/deposit.zk,11,22,9,13,safe,safe,True,True,5,10,3,1,False,unbounded,nullifier expected_root old_commit_x old_commit_y new_commit_x new_commit_y new_leaf tx_binding tx_nonce
+purse,Withdraw,src/contract/purse/proof/withdraw.zk,11,22,9,13,safe,safe,True,True,5,10,3,1,False,unbounded,nullifier expected_root old_commit_x old_commit_y new_commit_x new_commit_y new_leaf tx_binding tx_nonce
+purse,Balance,src/contract/purse/proof/balance.zk,11,18,7,11,safe,safe,False,False,5,3,1,1,False,0,derived_purse_id expected_root balance_commit_x balance_commit_y token_commit tx_binding tx_nonce
+promissory_note,RegisterType_V2,src/contract/promissory_note/proof/register_type.zk,11,13,8,5,safe,safe,False,True,3,3,1,0,True,0,asset_id token_auth_parent coin value_commit.x value_commit.y coin_spend_hook tx_binding tx_nonce
+promissory_note,Issue_V2,src/contract/promissory_note/proof/issue.zk,11,14,9,5,safe,safe,False,True,3,3,1,1,True,0,token_root mint_public coin value_commit.x value_commit.y asset_id coin_spend_hook tx_binding tx_nonce
+promissory_note,Revoke_V2,src/contract/promissory_note/proof/revoke.zk,11,15,10,5,scrutiny,safe,True,False,8,3,1,1,True,1,nullifier value_commit.x value_commit.y token_commit root user_data_enc coin_spend_hook signature_public tx_binding tx_nonce
+promissory_note,Transfer_V2,src/contract/promissory_note/proof/transfer.zk,11,11,7,4,safe,safe,False,True,3,3,1,0,True,0,coin value_commit.x value_commit.y token_commit coin_spend_hook tx_binding tx_nonce
+promissory_note,Redeem_V2,src/contract/promissory_note/proof/redeem.zk,11,11,8,3,safe,safe,False,True,3,3,0,0,True,0,coin value_commit.x value_commit.y token_commit value tx_binding tx_nonce coin_spend_hook

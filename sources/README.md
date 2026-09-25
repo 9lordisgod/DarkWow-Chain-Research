@@ -29,7 +29,7 @@ mdbook serve                # `make` instead for the full build including rustdo
 # then print the served book to PDF from a browser
 ```
 
-Useful page ranges in this snapshot (as extracted with `pypdf`): contract deployment pipeline & genesis table pp. 123–125; Uncle Merkle overview pp. 337–339; uncle reward split & formal spec pp. 366–368; consensus & coinbase — emission constants pp. 645–652; genesis specification pp. 903–907; history of the fork / philosophy pp. 1921–1923.
+Useful page ranges in this snapshot (as extracted with `pypdf`): contract deployment pipeline & genesis table pp. 123–125; Uncle Merkle overview pp. 337–339; uncle reward split & formal spec pp. 366–368; consensus & coinbase — emission constants pp. 645–652; genesis specification pp. 903–907; history of the fork / philosophy pp. 1921–1923; L1 privacy model, consume+create and the complexity ceiling pp. 195–197 (triage table pp. 1491–1492); Promissory Note chapter pp. 918–963 (Conder tokens and the three problems 918–919, receipt / `is_notequal` 931, issuer responsibility 921, selectors 959 and 962, residual risks 963); Purse chapter pp. 988–990; Box chapter pp. 992–994; transaction binding pp. 1249–1253; hardening heuristics (RC8) p. 1484; contract standards — `Encode ZK Inputs Only`, Schnorr prohibition p. 892.
 
 ## DarkWow source code
 
@@ -46,6 +46,11 @@ Files cited most often:
 | `src/linear/src/supply_chain.rs` | `compute_reward()`, `verify_uncle_split()` |
 | `bin/dwowd/src/lib.rs` | `init_genesis()`, `build_genesis_deployment_txs()` |
 | `src/contract/README.md` | contract catalogue, token design philosophy |
+| `src/contract/box/proof/{put,take}.zk`, `src/contract/purse/proof/{deposit,withdraw,balance}.zk`, `src/contract/promissory_note/proof/{register_type,issue,revoke,transfer,redeem}.zk` | the ten L1 circuits read in Week 1 §3 |
+| `src/contract/{box,purse,promissory_note}/src/model/mod.rs`, `.../entrypoint/mod.rs`, `.../manifest.toml`, `.../README.md` | wire structs, Exec/Apply logic, `witness_map`, barb tables |
+| `src/contract/promissory_note/src/lib.rs` | `PromissoryNoteFunction` selectors |
+| `src/linear/src/chain_state.rs`, `src/linear/src/transaction.rs` | block‑level nullifier de‑duplication |
+| `doc/src/arch/privacy.md`, `doc/src/arch/wallet.md`, `doc/src/arch/verification-hazop.md`, `doc/src/contract/{box,purse,promissory_note,tx-commitment}.md`, `doc/src/dev/contracts/{safety,contract-standards}.md` | L1 design text, generic prover, HAZOP obligations, complexity ceiling |
 | `doc/src/arch/genesis.md`, `doc/src/arch/consensus/*`, `doc/src/arch/ocap.md`, `doc/src/about/differences_from_upstream.md`, `doc/src/philosophy/*` | spec text quoted in the notes |
 
 ## Week 1 original notes

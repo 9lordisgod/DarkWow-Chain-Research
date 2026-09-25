@@ -1,0 +1,79 @@
+contract,struct,offset,field,bytes,plaintext_witness,note
+box,PutParams,0,box_id,32,True,the resource ID the Book says is 'never a public input'
+box,PutParams,32,old_state_nonce,32,True,
+box,PutParams,64,new_state_nonce,32,True,
+box,PutParams,96,old_contents_commit,32,True,
+box,PutParams,128,new_contents_commit,32,True,
+box,PutParams,160,nullifier,32,False,
+box,PutParams,192,expected_root,32,False,
+box,PutParams,224,new_leaf,32,False,
+box,PutParams,256,leaf_pos,4,True,
+box,PutParams,260,merkle_path,1024,True,
+box,PutParams,1284,proof,1,False,u8 length prefix; the real proof travels in Transaction.proofs
+box,PutParams,1285,tx_binding,32,False,
+box,PutParams,1317,tx_nonce,32,False,
+box,PutParams,1349,"(total, excluding proof bytes)",1349,,hdr=260
+box,TakeParams,0,box_id,32,True,
+box,TakeParams,32,contents_commit,32,True,
+box,TakeParams,64,state_nonce,32,True,
+box,TakeParams,96,nullifier,32,False,
+box,TakeParams,128,expected_root,32,False,
+box,TakeParams,160,leaf_pos,4,True,
+box,TakeParams,164,merkle_path,1024,True,
+box,TakeParams,1188,proof,1,False,
+box,TakeParams,1189,tx_binding,32,False,
+box,TakeParams,1221,tx_nonce,32,False,
+box,TakeParams,1253,"(total, excluding proof bytes)",1253,,hdr=164
+purse,DepositParams,0,purse_id,32,True,
+purse,DepositParams,32,old_balance,8,True,"u64 LE, plaintext"
+purse,DepositParams,40,deposit_amount,8,True,"u64 LE, plaintext (withdraw_amount for WithdrawParams)"
+purse,DepositParams,48,new_balance,8,True,"u64 LE, plaintext"
+purse,DepositParams,56,state_nonce,32,True,
+purse,DepositParams,88,nullifier,32,False,
+purse,DepositParams,120,expected_root,32,False,
+purse,DepositParams,152,new_leaf,32,False,
+purse,DepositParams,184,old_commit_x,32,False,
+purse,DepositParams,216,old_commit_y,32,False,
+purse,DepositParams,248,new_commit_x,32,False,
+purse,DepositParams,280,new_commit_y,32,False,
+purse,DepositParams,312,leaf_pos,4,True,
+purse,DepositParams,316,merkle_path,1024,True,
+purse,DepositParams,1340,proof,1,False,
+purse,DepositParams,1341,tx_binding,32,False,
+purse,DepositParams,1373,tx_nonce,32,False,
+purse,DepositParams,1405,asset_id,32,True,"not a witness of Deposit/Withdraw at all; unused by circuit, metadata and exec"
+purse,DepositParams,1437,"(total, excluding proof bytes)",1437,,hdr=316
+purse,WithdrawParams,0,purse_id,32,True,
+purse,WithdrawParams,32,old_balance,8,True,"u64 LE, plaintext"
+purse,WithdrawParams,40,deposit_amount,8,True,"u64 LE, plaintext (withdraw_amount for WithdrawParams)"
+purse,WithdrawParams,48,new_balance,8,True,"u64 LE, plaintext"
+purse,WithdrawParams,56,state_nonce,32,True,
+purse,WithdrawParams,88,nullifier,32,False,
+purse,WithdrawParams,120,expected_root,32,False,
+purse,WithdrawParams,152,new_leaf,32,False,
+purse,WithdrawParams,184,old_commit_x,32,False,
+purse,WithdrawParams,216,old_commit_y,32,False,
+purse,WithdrawParams,248,new_commit_x,32,False,
+purse,WithdrawParams,280,new_commit_y,32,False,
+purse,WithdrawParams,312,leaf_pos,4,True,
+purse,WithdrawParams,316,merkle_path,1024,True,
+purse,WithdrawParams,1340,proof,1,False,
+purse,WithdrawParams,1341,tx_binding,32,False,
+purse,WithdrawParams,1373,tx_nonce,32,False,
+purse,WithdrawParams,1405,asset_id,32,True,"not a witness of Deposit/Withdraw at all; unused by circuit, metadata and exec"
+purse,WithdrawParams,1437,"(total, excluding proof bytes)",1437,,hdr=316
+purse,BalanceParams,0,purse_id,32,True,
+purse,BalanceParams,32,asset_id,32,True,
+purse,BalanceParams,64,balance,8,True,"u64 LE, plaintext"
+purse,BalanceParams,72,state_nonce,32,True,
+purse,BalanceParams,104,derived_purse_id,32,False,
+purse,BalanceParams,136,expected_root,32,False,
+purse,BalanceParams,168,token_commit,32,False,
+purse,BalanceParams,200,balance_commit_x,32,False,
+purse,BalanceParams,232,balance_commit_y,32,False,
+purse,BalanceParams,264,leaf_pos,4,True,
+purse,BalanceParams,268,merkle_path,1024,True,
+purse,BalanceParams,1292,proof,1,False,
+purse,BalanceParams,1293,tx_binding,32,False,
+purse,BalanceParams,1325,tx_nonce,32,False,
+purse,BalanceParams,1357,"(total, excluding proof bytes)",1357,,hdr=268

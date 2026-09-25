@@ -10,7 +10,7 @@ Each week's topic is set by Patrick Mockridge, DarkWow's author. The write‑up 
 
 | Week | Dates | Topic | Artifacts |
 |:---:|---|---|---|
-| [**01**](weeks/week-01/README.md) | 2026‑09‑21 → 09‑27 | **Genesis block & architecture** — the nine genesis contracts, deterministic `ContractId`s, why only two are consensus‑critical, and the five structural breaks from DarkFi (O‑Cap vs DAO, the Money split, zero premine + emission, Uncle Merkle vs overlay‑DAG, ZK predicates vs ACLs) | 8 diagrams · 4 charts · 3 models · 26 tests · 6 findings |
+| [**01**](weeks/week-01/README.md) | 2026‑09‑21 → 09‑27 | **Genesis block & architecture** — the nine genesis contracts, deterministic `ContractId`s, why only two are consensus‑critical, and the five structural breaks from DarkFi (O‑Cap vs DAO, the Money split, zero premine + emission, Uncle Merkle vs overlay‑DAG, ZK predicates vs ACLs). **Deep dive:** the three L1 genesis contracts — Box, Purse and Promissory Note — under zero knowledge: all ten Halo2 circuits, the params‑based wire format, the Book's complexity ceiling, and an owner‑binding gap in the Box/Purse leaf ([§3](weeks/week-01/README.md#3-box-purse-and-promissory-note-under-zero-knowledge)) | 11 diagrams · 5 charts · 4 models · 56 tests · 17 findings |
 
 ## What's in the repository
 
@@ -25,10 +25,11 @@ Each week's topic is set by Patrick Mockridge, DarkWow's author. The write‑up 
 │   ├── darkwow_research/         ← pure‑Python ports of consensus rules
 │   │   ├── emission.py           ←   expected_reward() / fixed_pow_decay(), integer‑exact
 │   │   ├── uncle_split.py        ←   compute_reward() pin split + mass‑balance invariant
-│   │   └── genesis.py            ←   the nine genesis contracts, counters, crates, roles
+│   │   ├── genesis.py            ←   the nine genesis contracts, counters, crates, roles
+│   │   └── l1_circuits.py        ←   Box / Purse / Promissory Note circuits, tiers, wire formats
 │   ├── plot_charts.py            ← regenerates every chart and data table
-│   └── tests/                    ← pytest suite mirroring the upstream Rust unit tests
-├── data/                         ← CSV outputs (emission milestones, sampled curve, genesis table)
+│   └── tests/                    ← pytest suite mirroring the upstream Rust unit tests + the notes' claims
+├── data/                         ← CSV outputs (emission, genesis table, L1 circuit inventory, wire formats)
 └── sources/                      ← primary‑source snapshot + provenance (The DarkWow Book, PDF)
 ```
 
@@ -54,7 +55,7 @@ All re‑derived from `src/sdk/src/blockchain.rs` and `src/sdk/src/crypto/contra
 
 ```bash
 python3 -m pip install -r code/requirements.txt
-( cd code && python3 -m pytest )      # 26 tests
+( cd code && python3 -m pytest )      # 56 tests
 python3 code/plot_charts.py           # ~20 s; rewrites weeks/*/charts and data/
 ```
 

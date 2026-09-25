@@ -11,9 +11,12 @@ weeks/week-01/charts/emission_curve.png
 weeks/week-01/charts/cumulative_supply.png
 weeks/week-01/charts/uncle_pin_split.png
 weeks/week-01/charts/fixed_point_drift.png
+weeks/week-01/charts/l1_ceiling.png
 data/emission_milestones.csv
 data/emission_curve_sampled.csv
 data/genesis_contracts.csv
+data/l1_circuit_inventory.csv
+data/l1_wire_formats.csv
 
 Everything is derived from the integer consensus functions in
 ``darkwow_research`` -- the plots are just a projection of those numbers.
@@ -38,6 +41,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from darkwow_research import emission as em  # noqa: E402
 from darkwow_research import genesis as g  # noqa: E402
+from darkwow_research import l1_circuits as l1  # noqa: E402
 from darkwow_research import uncle_split as us  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -202,6 +206,35 @@ def chart_uncle_pin_split():
     plt.close(fig)
 
 
+def chart_l1_ceiling():
+    """Public inputs and witness-only values per L1 circuit against the Book's ceiling."""
+    labels = [f"{c.contract.replace('promissory_note', 'PN')}\n{c.name}" for c in l1.CIRCUITS]
+    pub = [len(c.public_inputs) for c in l1.CIRCUITS]
+    wit = [c.witness_only for c in l1.CIRCUITS]
+
+    fig, ax = plt.subplots(figsize=(11, 4.8))
+    x = np.arange(len(labels))
+    width = 0.38
+    ax.bar(x - width / 2, pub, width, color=C_DARKWOW, label="public inputs (constrain_instance)")
+    ax.bar(x + width / 2, wit, width, color=C_UNCLE, label="witness-only values")
+    ax.axhline(l1.P_CEILING, color=C_DARKWOW, ls="--", lw=1)
+    ax.axhline(l1.W_CEILING, color=C_UNCLE, ls="--", lw=1)
+    ax.text(len(labels) - 0.5, l1.P_CEILING + 0.2, f"P_CEILING = {l1.P_CEILING}", ha="right", color=C_DARKWOW, fontsize=9)
+    ax.text(len(labels) - 0.5, l1.W_CEILING + 0.2, f"W_CEILING = {l1.W_CEILING}", ha="right", color="#4c1d95", fontsize=9)
+    for i, (p, w) in enumerate(zip(pub, wit)):
+        ax.text(i - width / 2, p + 0.15, str(p), ha="center", fontsize=8, color=C_CANON)
+        ax.text(i + width / 2, w + 0.15, str(w), ha="center", fontsize=8, color=C_CANON)
+    ax.set_xticks(x, labels, fontsize=8)
+    ax.set_ylabel("count per circuit")
+    ax.set_ylim(0, 15)
+    ax.set_title("Halo2 L1 complexity ceiling — the Book triages Box and Purse; Promissory Note is L1 too")
+    ax.legend(loc="upper left", fontsize=9, frameon=False)
+    ax.grid(axis="y", alpha=0.25)
+    fig.tight_layout()
+    fig.savefig(CHARTS / "l1_ceiling.png", dpi=160)
+    plt.close(fig)
+
+
 def chart_fixed_point_drift(hs, rs, onset):
     ideal = np.array([em.ideal_reward(int(h)) for h in hs])
     ppm = (rs - ideal) / ideal * 1e6
@@ -280,6 +313,33 @@ def write_genesis_table():
             w.writerow([c.genesis_position, c.counter, c.name, c.crate, c.role.value, c.derivation, c.purpose])
 
 
+def write_l1_tables():
+    with (DATA / "l1_circuit_inventory.csv").open("w", newline="") as f:
+        w = csv.writer(f)
+        w.writerow([
+            "contract", "circuit", "source", "k", "witness_slots", "public_inputs", "witness_only",
+            "public_input_tier", "witness_tier", "consumes", "creates", "poseidon_calls", "ec_ops",
+            "range_checks", "merkle_roots", "leaf_binds_owner", "max_nullifiers_per_leaf", "public_inputs_in_order",
+        ])
+        for c in l1.CIRCUITS:
+            nf = c.max_nullifiers_per_leaf
+            w.writerow([
+                c.contract, c.name, c.source, c.k, len(c.witnesses), len(c.public_inputs), c.witness_only,
+                c.public_input_tier.value, c.witness_tier.value, c.consumes, c.creates, c.poseidon_calls,
+                c.ec_ops, c.range_checks, c.merkle_roots, c.leaf_binds_owner,
+                "unbounded" if nf is None else nf, " ".join(c.public_inputs),
+            ])
+    with (DATA / "l1_wire_formats.csv").open("w", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["contract", "struct", "offset", "field", "bytes", "plaintext_witness", "note"])
+        for fmt in l1.WIRE_FORMATS:
+            off = 0
+            for fld in fmt.fields:
+                w.writerow([fmt.contract, fmt.struct, off, fld.name, fld.size, fld.witness_only, fld.note])
+                off += fld.size
+            w.writerow([fmt.contract, fmt.struct, off, "(total, excluding proof bytes)", fmt.encoded_size(), "", f"hdr={fmt.header_bytes}"])
+
+
 def print_markdown_milestones(rows):
     print("\n| Milestone | Height | Block reward (DRKW) | Total supply (DRKW) | Annual inflation |")
     print("|---|---:|---:|---:|---:|")
@@ -303,10 +363,12 @@ def main() -> None:
     chart_emission_curve(hs_all, rs_all, onset)
     chart_cumulative_supply(hs_all, rs_all, ss_all, onset)
     chart_uncle_pin_split()
+    chart_l1_ceiling()
 
     rows = write_milestones(hs, ss, onset, supply_before_onset)
     write_sampled_curve(hs_all, rs_all, ss_all)
     write_genesis_table()
+    write_l1_tables()
     print_markdown_milestones(rows)
     print(f"\nwrote charts to {CHARTS.relative_to(ROOT)}/ and tables to {DATA.relative_to(ROOT)}/")
 
