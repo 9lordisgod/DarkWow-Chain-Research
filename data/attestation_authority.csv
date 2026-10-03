@@ -1,0 +1,15 @@
+code,name,circuit,public_inputs,actor,actor_binding,replayable_proof,state_checks,note
+0x00,CreateAttestationV1,CreateAttestationV2,tx_binding tx_nonce,attestor,none,True,attestation_id unique,attestor_pub stored from params; `attestor_secret: zero // Not stored`
+0x01,RevokeAttestationV1,,,attestor,state,False,attestation exists; params.attestor_pub == stored attestor_pub; state Active,no circuit; the compared field is a *public* key anyone can copy onto the wire
+0x02,ExpireAttestationV1,,,anyone,none,False,attestation exists; expiry <= height,no circuit; legitimately permissionless
+0x03,CreateClaimV1,CreateClaimV2,tx_binding tx_nonce,claimant,none,True,"attestation Active & unexpired; predicate matches or Custom; claim_id unique; rate limit: 1 block per (attestation, claimant_pub)","claimant_pub stored from params, unauthenticated"
+0x04,VerifyClaimV1,VerifyClaimV2,tx_binding tx_nonce,verifier,none,True,claim Pending; attestation Active; claim.attestation_id == params; evidence_commitment == params; verified := revealed_result != 0,comments say the circuit constrains revealed_result; VerifyClaimV2 constrains only the tx pair
+0x05,ConsumeClaimV1,ConsumeClaimV2,claim_id claimant_pub.x claimant_pub.y nullifier tx_binding tx_nonce,consumer,proof,False,claim Verified; claim.claimant_pub == params.claimant_pub; nullifier unspent,"consumer_pub = ec_mul_base(consumer_secret, NULLIFIER_K); nullifier = H(1, claim_id, consumer_secret)"
+0x06,ValidateClaimV1,,,anyone,none,False,claim exists,"read-only, no circuit"
+0x07,CheckNotRevokedV1,CheckNotRevokedV2,tx_binding tx_nonce,anyone,none,True,attestation exists; state != Revoked,read-only predicate
+0x08,DelegateAttestationV1,DelegateAttestationV2,delegatee_leaf tx_binding tx_nonce,attestor,none,True,attestation Active; delegation_id unique,"publishes H(4, delegatee_pub) -- the *delegatee*, not the delegating attestor"
+0x09,VerifyChainV1,VerifyChainV2,tx_binding tx_nonce,anyone,none,True,each link exists and is Active,read-only
+0x0a,UpdateDelegationV1,UpdateDelegationV2,tx_binding tx_nonce,attestor,none,True,delegation exists,delegator not proven
+0x0b,AttestSlashV1,AttestSlashV2,tx_binding tx_nonce,attestor,none,True,attestation exists,
+0x0c,CommitFeeScheduleV1,CommitFeeScheduleV2,tx_binding tx_nonce,attestor,none,True,schedule_id unique,
+0x0d,CheckAttestationV1,,,anyone,none,False,attestation exists,"read-only, no circuit"

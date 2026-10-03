@@ -1,0 +1,42 @@
+contract,circuit,k,witnesses,constrain_instance,constrain_equal,poseidon,ec_mul,merkle_root,range_checks,statements,only_tx_pair_public,binds_a_secret,public_inputs_in_order
+box,put,11,15,5,6,5,0,1,0,23,False,True,nullifier expected_root new_leaf tx_binding tx_nonce
+box,take,11,12,4,4,4,0,1,0,17,False,True,nullifier expected_root tx_binding tx_nonce
+purse,balance,11,18,7,7,5,2,1,1,29,False,True,
+purse,deposit,11,24,10,12,6,6,1,4,52,False,True,
+purse,withdraw,11,24,10,13,6,6,1,5,54,False,True,
+promissory_note,issue,11,14,9,2,3,2,1,1,32,False,True,
+promissory_note,redeem,11,11,8,1,3,2,0,0,27,False,True,
+promissory_note,register_type,11,13,8,0,3,2,0,1,26,False,True,
+promissory_note,revoke,11,15,10,1,8,2,1,2,41,False,True,
+promissory_note,transfer,11,11,7,0,3,2,0,1,25,False,True,
+identity,issue_credential,11,18,3,3,5,1,0,0,33,False,True,
+identity,verify_capability,11,19,10,2,6,0,0,4,42,False,True,
+attestation,attest_slash,11,6,2,0,1,0,0,0,3,True,False,tx_binding tx_nonce
+attestation,check_not_revoked,11,4,2,0,2,0,0,0,4,True,False,tx_binding tx_nonce
+attestation,commit_fee_schedule,11,6,2,0,1,0,0,0,3,True,False,tx_binding tx_nonce
+attestation,consume_claim,11,8,6,3,2,1,0,0,16,False,True,claim_id claimant_pub_x claimant_pub_y nullifier tx_binding tx_nonce
+attestation,create_attestation,11,6,2,0,1,0,0,0,3,True,False,tx_binding tx_nonce
+attestation,create_claim,11,7,2,0,1,0,0,0,3,True,False,tx_binding tx_nonce
+attestation,delegate_attestation,11,6,3,0,2,0,0,0,5,False,False,
+attestation,update_delegation,11,6,2,0,1,0,0,0,3,True,False,tx_binding tx_nonce
+attestation,verify_chain,11,7,2,0,1,0,0,0,3,True,False,tx_binding tx_nonce
+attestation,verify_claim,11,6,2,0,4,0,0,0,6,True,False,tx_binding tx_nonce
+oracle,aggregate,13,17,8,2,3,0,0,17,50,False,True,
+oracle,attest_value,13,9,8,0,3,0,0,0,14,False,False,
+oracle,push_value,13,6,6,0,3,0,0,0,12,False,False,oracle_id oracle_commitment value nullifier tx_binding tx_nonce
+oracle,push_value_commitment,14,8,6,1,4,0,0,0,15,False,True,
+oracle,register_oracle,13,5,4,0,2,0,0,0,8,False,False,
+oracle,set_oracle_active,13,6,5,0,2,0,0,0,9,False,False,
+multisig,create_group,11,5,5,0,1,0,0,1,8,False,False,
+multisig,finalize,11,5,5,1,2,0,0,0,10,False,True,
+multisig,sign,11,5,6,0,3,0,0,0,12,False,False,
+dao_escrow,init,11,7,4,0,2,1,0,0,18,False,True,
+dao_escrow,pay_premium,11,15,2,3,3,1,0,3,29,True,True,
+dao_escrow,propose_claim,11,12,3,2,4,1,0,0,23,False,True,
+dao_escrow,set_governance_config,11,8,5,3,2,1,0,0,11,False,True,
+dao_escrow,vote_claim,11,12,3,2,3,1,0,0,18,False,True,
+escrow,cancel,11,7,6,2,2,1,0,0,15,False,True,
+escrow,claim,11,8,5,3,3,1,0,0,17,False,True,escrow_id escrow_seller_commitment tx_binding tx_nonce spent_nullifier
+escrow,create_escrow,11,11,4,2,3,1,0,0,21,False,True,
+escrow,fund,11,8,6,0,1,2,1,0,11,False,True,
+escrow,refund,11,11,8,4,2,1,0,0,19,False,True,

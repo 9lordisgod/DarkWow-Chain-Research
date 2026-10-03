@@ -1,0 +1,18 @@
+code,book_name,book_capability,fate,shipped,note
+0x00,InitializeV1,none (creator),kept,True,
+0x01,UpdateV1,none (creator),kept,True,
+0x02,PayPremiumV1,none,kept,True,child PN::TransferV1 at slot 0
+0x03,WithdrawV1,capability-gated,rewired,True,owner's SetGovernanceConfigV2 proof
+0x04,EndowmentWithdrawV1,board_endowment via Box,rewired,True,"MultiSig::FinalizeV1 child, fail-closed"
+0x05,TreasurySpendV1,board_treasury via Box,rewired,True,"MultiSig::FinalizeV1 child, fail-closed"
+0x06,EnableDrainProtectionV1,none,retired,False,flag nothing read (OBL-C151)
+0x07,ProposeClaimV1,member_vote,rewired,True,"membership proof, no Identity"
+0x08,VoteClaimV1,member_vote,rewired,True,group member proof
+0x09,ExecuteClaimV1,none (quorum),kept,True,
+0x0a,RegisterCapabilityRequirementV1,board_treasury,retired,False,
+0x0b,VerifyMemberCapabilityV1,none (is the check),retired,False,Identity::VerifyCapabilityV1 child never wired
+0x0c,ResolveDisputeV1,dispute_arbitrator,retired,False,Oracle->Attestation->3-of-5 flow never implemented
+0x0d,CancelClaimV1,proposer identity match,kept,True,
+0x0e,SetGovernanceConfigV1,board_treasury,retired,False,folded into UpdateV1
+0x0f,SetGovernanceActiveV1,board_treasury,retired,False,governance_active=false fail-open flag removed
+0x10,DeactivateCapabilityRequirementV1,board_treasury,retired,False,

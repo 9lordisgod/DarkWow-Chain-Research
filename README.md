@@ -11,6 +11,7 @@ Each week's topic is set by Patrick Mockridge, DarkWow's author. The write‑up 
 | Week | Dates | Topic | Artifacts |
 |:---:|---|---|---|
 | [**01**](weeks/week-01/README.md) | 2026‑09‑21 → 09‑27 | **Genesis block & architecture** — the nine genesis contracts, deterministic `ContractId`s, why only two are consensus‑critical, and the five structural breaks from DarkFi (O‑Cap vs DAO, the Money split, zero premine + emission, Uncle Merkle vs overlay‑DAG, ZK predicates vs ACLs). **Deep dive:** the three L1 genesis contracts — Box, Purse and Promissory Note — under zero knowledge: all ten Halo2 circuits, the params‑based wire format, the Book's complexity ceiling, and an owner‑binding gap in the Box/Purse leaf ([§3](weeks/week-01/README.md#3-box-purse-and-promissory-note-under-zero-knowledge)) | 11 diagrams · 5 charts · 4 models · 56 tests · 17 findings |
+| [**02**](weeks/week-02/README.md) | 2026‑09‑28 → 10‑04 | **O‑Cap governance primitives vs. monolithic DAOs** — four bug claims (execution reordering in Box/Purse composition, attestation replay, stale oracle masking, `manifest.toml` capability aliasing) read against the Book's `dao_escrow` design and the code at `d775e37c`. One is not reproducible, one is not applicable, one is confirmed and understated (attestations can be *forged* with one secret), one is real but wallet‑side — and beneath all four the `tx_binding` chain is missing its fourth stage, so every proof is portable across transactions ([§7](weeks/week-02/README.md#7-crosscutting-the-tx_binding-chain-the-verification-register-two-week-1-corrections)); includes two corrections to Week 1 | 13 diagrams · 8 charts · 5 models · 102 tests · 17 findings |
 
 ## What's in the repository
 
@@ -18,18 +19,26 @@ Each week's topic is set by Patrick Mockridge, DarkWow's author. The write‑up 
 .
 ├── README.md                     ← you are here
 ├── weeks/
-│   └── week-01/
-│       ├── README.md             ← the Week 1 write‑up (start here)
-│       └── charts/*.png          ← generated figures embedded in the write‑up
+│   ├── week-01/
+│   │   ├── README.md             ← the Week 1 write‑up (start here)
+│   │   └── charts/*.png          ← generated figures embedded in the write‑up
+│   └── week-02/
+│       ├── README.md             ← the Week 2 write‑up: four bug claims vs. the code
+│       └── charts/*.png
 ├── code/
-│   ├── darkwow_research/         ← pure‑Python ports of consensus rules
+│   ├── darkwow_research/         ← pure‑Python ports and models
 │   │   ├── emission.py           ←   expected_reward() / fixed_pow_decay(), integer‑exact
 │   │   ├── uncle_split.py        ←   compute_reward() pin split + mass‑balance invariant
 │   │   ├── genesis.py            ←   the nine genesis contracts, counters, crates, roles
-│   │   └── l1_circuits.py        ←   Box / Purse / Promissory Note circuits, tiers, wire formats
+│   │   ├── l1_circuits.py        ←   Box / Purse / Promissory Note circuits, tiers, wire formats
+│   │   ├── ocap_primitives.py    ←   the six governance primitives, 41 circuits, dao_escrow Book‑vs‑code, composition matrix
+│   │   ├── call_tree.py          ←   DarkTree post‑order, slot checks, atomic execution; escrow ClaimV1 and Book‑era TreasurySpend
+│   │   ├── binding.py            ←   attestation authority table, forgery path, the tx_binding chain, 19/11/1/1 split
+│   │   ├── oracle_freshness.py   ←   oracle push/read model, staleness‑vs‑false‑reject simulation
+│   │   └── manifest_caps.py      ←   manifest surface, trust layers, name‑aliasing demo
 │   ├── plot_charts.py            ← regenerates every chart and data table
 │   └── tests/                    ← pytest suite mirroring the upstream Rust unit tests + the notes' claims
-├── data/                         ← CSV outputs (emission, genesis table, L1 circuit inventory, wire formats)
+├── data/                         ← CSV outputs (emission, genesis, L1 circuits, wire formats, composition matrix, attestation authority, …)
 └── sources/                      ← primary‑source snapshot + provenance (The DarkWow Book, PDF)
 ```
 
@@ -55,7 +64,7 @@ All re‑derived from `src/sdk/src/blockchain.rs` and `src/sdk/src/crypto/contra
 
 ```bash
 python3 -m pip install -r code/requirements.txt
-( cd code && python3 -m pytest )      # 56 tests
+( cd code && python3 -m pytest )      # 158 tests
 python3 code/plot_charts.py           # ~20 s; rewrites weeks/*/charts and data/
 ```
 
@@ -65,7 +74,7 @@ Python ≥ 3.10; the models themselves have no dependencies beyond the standard 
 
 * **Code:** [PatrickMockridge/DarkWow](https://github.com/PatrickMockridge/DarkWow) (GitHub mirror of [codeberg.org/PatrickM123/darkwow](https://codeberg.org/PatrickM123/darkwow)), branch `linear-master`, AGPL‑3.0‑only. Short excerpts are quoted in the notes for commentary, with file paths.
 * **Spec:** *The DarkWow Book*, the project's mdbook documentation, snapshotted as a PDF on 2026‑09‑03 — [`sources/`](sources/README.md) has the file, its checksum and how to rebuild a fresh copy from `doc/`.
-* **Week 1 original notes:** [Google Doc](https://docs.google.com/document/d/1G5zCkHBF2VW92Cn9dtDrSdRFjtlWLs5aJD4qQeSaiHM/edit?usp=sharing).
+* **Original notes (Weeks 1–2):** [Google Doc](https://docs.google.com/document/d/1G5zCkHBF2VW92Cn9dtDrSdRFjtlWLs5aJD4qQeSaiHM/edit?usp=sharing).
 
 ## Conventions
 

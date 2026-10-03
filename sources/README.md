@@ -31,6 +31,8 @@ mdbook serve                # `make` instead for the full build including rustdo
 
 Useful page ranges in this snapshot (as extracted with `pypdf`): contract deployment pipeline & genesis table pp. 123–125; Uncle Merkle overview pp. 337–339; uncle reward split & formal spec pp. 366–368; consensus & coinbase — emission constants pp. 645–652; genesis specification pp. 903–907; history of the fork / philosophy pp. 1921–1923; L1 privacy model, consume+create and the complexity ceiling pp. 195–197 (triage table pp. 1491–1492); Promissory Note chapter pp. 918–963 (Conder tokens and the three problems 918–919, receipt / `is_notequal` 931, issuer responsibility 921, selectors 959 and 962, residual risks 963); Purse chapter pp. 988–990; Box chapter pp. 992–994; transaction binding pp. 1249–1253; hardening heuristics (RC8) p. 1484; contract standards — `Encode ZK Inputs Only`, Schnorr prohibition p. 892.
 
+Week 2 page ranges: trust model table p. 6; governance primitives overview pp. 18 & 187; trust tiers (`Genesis → SelfDeployed → Attested → Unverified`) p. 889; Oracle chapter pp. 975–979 (Oracle + Attestation flow 976, trust table and in‑circuit signature bypass 979); Attestation chapter pp. 981–983 (replay note 981, 13‑selector table 983); DAO escrow chapter pp. 1142–1163 (five‑primitive composition 1142, `governance_active` fail‑open 1147, 17‑selector table 1145–1146, test status 1163); composability and `data[0]` child checks pp. 1171–1176; transaction binding p. 1251.
+
 ## DarkWow source code
 
 * GitHub mirror: <https://github.com/PatrickMockridge/DarkWow> · canonical: <https://codeberg.org/PatrickM123/darkwow>
@@ -52,7 +54,13 @@ Files cited most often:
 | `src/linear/src/chain_state.rs`, `src/linear/src/transaction.rs` | block‑level nullifier de‑duplication |
 | `doc/src/arch/privacy.md`, `doc/src/arch/wallet.md`, `doc/src/arch/verification-hazop.md`, `doc/src/contract/{box,purse,promissory_note,tx-commitment}.md`, `doc/src/dev/contracts/{safety,contract-standards}.md` | L1 design text, generic prover, HAZOP obligations, complexity ceiling |
 | `doc/src/arch/genesis.md`, `doc/src/arch/consensus/*`, `doc/src/arch/ocap.md`, `doc/src/about/differences_from_upstream.md`, `doc/src/philosophy/*` | spec text quoted in the notes |
+| `src/contract/{dao_escrow,escrow,attestation,oracle,identity,multisig}/src/entrypoint*.rs`, `.../proof/*.zk`, `.../manifest.toml` | the governance primitives and their composers read in Week 2 |
+| `src/sdk/src/dark_tree.rs`, `src/tx/mod.rs`, `src/linear/src/{execution,zk_verifier}.rs`, `src/zkas/opcode.rs` | call ordering, atomicity, proof verification, the zkas opcode set (Week 2 §3) |
+| `src/runtime/import/db.rs` and the other 24 host imports | the cross‑contract read boundary and the absent `tx_commitment` import (Week 2 §5, §7) |
+| `src/sdk/src/manifest.rs`, `bin/dww/src/{dispatch,manifest_resolver}.rs`, `doc/src/arch/manifest.md` | manifest encoding, trust layers, name resolution (Week 2 §6) |
 
-## Week 1 original notes
+Week 1 was read at commit `ec914970`; Week 2 at `d775e37c` (`linear-master`, 2026‑10‑03). Where the two differ the notes say so.
 
-Google Doc: <https://docs.google.com/document/d/1G5zCkHBF2VW92Cn9dtDrSdRFjtlWLs5aJD4qQeSaiHM/edit?usp=sharing> — the text that [`weeks/week-01/README.md`](../weeks/week-01/README.md) expands on.
+## Original notes
+
+Google Doc: <https://docs.google.com/document/d/1G5zCkHBF2VW92Cn9dtDrSdRFjtlWLs5aJD4qQeSaiHM/edit?usp=sharing> — the text that [`weeks/week-01/README.md`](../weeks/week-01/README.md) and [`weeks/week-02/README.md`](../weeks/week-02/README.md) expand on (Week 1 and Week 2 sections respectively).
